@@ -5,7 +5,7 @@
 #include <math.h>
 #include <vector>
 #include "globals.h"
-#include "landscape.h"
+#include "landscape_interface.h"
 #include "fireweather.h"
 
 namespace wildland_firesim {
@@ -33,7 +33,7 @@ public:
      * \param weather
      * \param timestepLength
      */
-    void spreadFire(Landscape *landscape, FireWeather weather, int timestepLength);
+    void spreadFire(LandscapeInterface *landscape, FireWeather weather, int timestepLength);
     /*!
      * \brief fire::initiateWildFire
      * Function to set a point ignition source at a random cell vertex within the model landscape. Then the
@@ -41,7 +41,7 @@ public:
      * to the initial ignition probability.
      * \param landscape
      */
-    void initiateWildFire(Landscape *landscape, FireWeather weather);
+    void initiateWildFire(LandscapeInterface *landscape, FireWeather weather);
 
     void initiatePrescribedBurning();
     /*!
@@ -50,7 +50,7 @@ public:
      * \param landscape
      * \param weather
      */
-    void setCenteredIgnitionPoint(Landscape *landscape);
+    void setCenteredIgnitionPoint(LandscapeInterface *landscape);
 
     struct burningCellInformation{
         int xCoord;

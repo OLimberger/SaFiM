@@ -8,13 +8,14 @@
 #include "globals.h"
 #include "utility.h"
 #include "cell.h"
+#include "landscape_interface.h"
 
 namespace wildland_firesim {
 
-class Landscape
+class ExampleLandscape : public LandscapeInterface
 {
 public:
-    Landscape();
+    ExampleLandscape();
 
     /*!
      * \brief generateLandscapeFromFile
@@ -29,24 +30,26 @@ public:
      * returns the width of the landscape
      * \return
      */
-    int getWidth() const;
+    int getWidth() const noexcept override;
 
     /*!
      * \brief getHeight
      * Returns the height in cells of the landscape.
      * \return
      */
-    int getHeight() const;
+    int getHeight() const noexcept override;
 
-    Cell *getCellInformation(int x, int y);
+    Cell *getCellInformation(int x, int y) override;
 
-    std::vector<Cell> cellInformation;
-    int cellSize;
+    int getCellSize() const noexcept override;
 
 private:
+    std::vector<Cell> cellInformation;
+
     //Landscape dimensions
     int m_width;
     int m_height;
+    int m_cellSize;
 
     std::size_t datasize;
 };

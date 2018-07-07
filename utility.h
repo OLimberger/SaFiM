@@ -2,7 +2,7 @@
 #define WILDLAND_FIRESIM_UTILITY_H
 
 #ifndef _NDEBUG
-#define WILDLAND_ASSERT(c, m) wildland_firesim::utility::assert((c), (m))
+#define WILDLAND_ASSERT(c, m) wildland_firesim::utility::_assert((c), (m))
 #else
 #define WILDLAND_ASSERT(c, m)
 #endif
@@ -13,7 +13,7 @@
 namespace wildland_firesim {
 namespace utility {
 
-void assert(bool condition, const char *message);
+void _assert(bool condition, const char *message);
 
 // Returns a pseudo-random float in [0..1)
 float random();

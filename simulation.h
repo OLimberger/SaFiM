@@ -23,7 +23,7 @@ public:
      * \param weather
      * \param output
      */
-    void runSimulation(Landscape *landscape, FireWeather weather, FireMap *output);
+    void runSimulation(ExampleLandscape *landscape, FireWeather weather, FireMap *output);
 
     int numberOfRuns;
     int maxFireDuration;

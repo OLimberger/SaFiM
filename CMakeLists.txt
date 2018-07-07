@@ -12,7 +12,7 @@ add_executable(${PROJECT_NAME}
     main.cpp
     fire.cpp
     firemap.cpp
-    landscape.cpp
+    example_landscape.cpp
     simulation.cpp
     utility.cpp
     csvreader.cpp

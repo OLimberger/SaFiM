@@ -2,29 +2,34 @@
 
 namespace wildland_firesim {
 
-Landscape::Landscape()
+ExampleLandscape::ExampleLandscape()
 {}
 
 int
-Landscape::getWidth() const
+ExampleLandscape::getWidth() const noexcept
 {
     return m_width;
 }
 
 int
-Landscape::getHeight() const
+ExampleLandscape::getHeight() const noexcept
 {
     return m_height;
 }
 
 Cell
-*Landscape::getCellInformation(int x, int y)
+*ExampleLandscape::getCellInformation(int x, int y)
 {
     return &cellInformation[static_cast<size_t>(y * m_width + x)];
 }
 
+int
+ExampleLandscape::getCellSize() const noexcept {
+    return m_cellSize;
+}
+
 void
-Landscape::importLandscapeFromFile()
+ExampleLandscape::importLandscapeFromFile()
 {
     // variables to store ascii grid information
     int width;
@@ -74,7 +79,7 @@ Landscape::importLandscapeFromFile()
     datasize = static_cast<size_t>(width * height);
     cellInformation.resize(datasize);
     //set cell size
-    cellSize = 30;
+    m_cellSize = 30;
     //cellSize = specifiedCellSize;
     //set vegetation type
     for(size_t i = 0; i < cellInformation.size(); i++){
@@ -137,7 +142,7 @@ Landscape::importLandscapeFromFile()
 }
 
 void
-Landscape::generateLandscapeFromFile(const std::string &fileName)
+ExampleLandscape::generateLandscapeFromFile(const std::string &fileName)
 {
 
     size_t NumberOfLandscapeCreationParameters = 10;
@@ -173,7 +178,7 @@ Landscape::generateLandscapeFromFile(const std::string &fileName)
     cellInformation.resize(datasize);
 
     //set cell size
-    cellSize = specificatedCellSize;
+    m_cellSize = specificatedCellSize;
 
     //assign parameters to individual cells within landscape
 

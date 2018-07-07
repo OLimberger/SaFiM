@@ -18,7 +18,7 @@ FireMap::setfileName(std::string baseName, std::string extention, int i)
 
 //functions for printing map to ASCII grid
 void
-FireMap::writeBurnMapToASCII(Landscape &landscape, std::string fileName)
+FireMap::writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName)
 {
     // create variable for output file stream
     std::ofstream burnDataFile;
@@ -42,7 +42,7 @@ FireMap::writeBurnMapToASCII(Landscape &landscape, std::string fileName)
 }
 
 void
-FireMap::writeVegetationMapToASCII(Landscape &landscape, std::string fileName)
+FireMap::writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fileName)
 {
     std::ofstream vegetationTypeDataFile;
     //vegetationTypeDataFile.open("output/"+fileName);
@@ -65,7 +65,7 @@ FireMap::writeVegetationMapToASCII(Landscape &landscape, std::string fileName)
 
 //functions to write csv-files
 void
-FireMap::writeVegetationDataToCSV(Landscape &landscape, std::string fileName)
+FireMap::writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fileName)
 {
     std::ofstream vegetationDataFile;
     //vegetationDataFile.open("output/"+fileName);
@@ -88,7 +88,7 @@ FireMap::writeVegetationDataToCSV(Landscape &landscape, std::string fileName)
 }
 
 void
-FireMap::writeBurnDataToCSV(Landscape &landscape, Fire &fire, std::string fileName)
+FireMap::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName)
 {
     std::ofstream burnDataFile;
     //burnDataFile.open("output/"+fileName);

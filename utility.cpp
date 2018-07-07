@@ -60,7 +60,7 @@ private:
 
 RandomNumberGenerator *RandomNumberGenerator::s_instance;
 
-void assert(bool condition, const char *message)
+void _assert(bool condition, const char *message)
 {
     if (!condition) {
         std::cerr << message << std::endl;

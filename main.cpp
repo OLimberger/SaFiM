@@ -134,19 +134,18 @@ int main(int argc, char *argv[] )
     //start simulation(s) and data log
     for(int i = 0; i<fireSimulation.numberOfRuns; i++){
         // create model landscape
-        Landscape modelLandscape;
+        ExampleLandscape modelLandscape;
         if(fireSimulation.importLandscape){
             modelLandscape.importLandscapeFromFile();
         } else {
             modelLandscape.generateLandscapeFromFile(fireSimulation.nameOfLandscapeParameterFile);
         }
-        Landscape * landscapePtr = &modelLandscape;
         //vegetation data before burn
         //output.writeVegetationMapToASCII(modelLandscape, output.setfileName("vegetation_map", ".asc", i));
         //output.writeVegetationDataToCSV(modelLandscape, output.setfileName("vegetation_data", ".csv", i));
 
         //fire simulation
-        fireSimulation.runSimulation(landscapePtr, weather, outputPtr);
+        fireSimulation.runSimulation(&modelLandscape, weather, outputPtr);
 
         //creating simulation output
         output.writeBurnMapToASCII(modelLandscape, output.setfileName("burn_map", ".asc", i ));

@@ -14,15 +14,15 @@ Fire::Fire() : burningCellInformationVector()
 }
 
 void
-Fire::spreadFire(Landscape *landscape, FireWeather weather, int timestepLength)
+Fire::spreadFire(LandscapeInterface *landscape, FireWeather weather, int timestepLength)
 {
     //create empty pointFireSource vector and correspondend vector with remaining time
     std::vector<pointFireSourceInformation> pointFireSourceInformationVector;
 
     //calculate distance to cell boundaries
-    distance_to_cell_boundary[0] = static_cast<float>(landscape->cellSize);
-    distance_to_cell_boundary[1] = std::sqrt(2.f) * landscape->cellSize;
-    distance_to_cell_boundary[2] = static_cast<float>(landscape->cellSize);
+    distance_to_cell_boundary[0] = static_cast<float>(landscape->getCellSize());
+    distance_to_cell_boundary[1] = std::sqrt(2.f) * landscape->getCellSize();
+    distance_to_cell_boundary[2] = static_cast<float>(landscape->getCellSize());
 
     // start cellwise routine
     // simulate fire spread within cells (per timestep)
@@ -246,7 +246,7 @@ Fire::spreadFire(Landscape *landscape, FireWeather weather, int timestepLength)
 }
 
 void
-Fire::initiateWildFire(Landscape *landscape, FireWeather weather)
+Fire::initiateWildFire(LandscapeInterface *landscape, FireWeather weather)
 {
     //set counter for burning cells to zero as no cell is burning before the fire is ignited
     numberOfCellsBurning = 0;
@@ -308,7 +308,7 @@ Fire::initiateWildFire(Landscape *landscape, FireWeather weather)
 }
 
 void
-Fire::setCenteredIgnitionPoint(Landscape *landscape)
+Fire::setCenteredIgnitionPoint(LandscapeInterface *landscape)
 {
     //set counter for burning cells to zero as no cell is burning before the fire is ignited
     numberOfCellsBurning = 0;
