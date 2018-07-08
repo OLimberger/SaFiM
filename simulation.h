@@ -5,7 +5,7 @@
 #include <string>
 #include "utility.h"
 #include "globals.h"
-#include "landscape.h"
+#include "example_landscape.h"
 #include "fire.h"
 #include "firemap.h"
 

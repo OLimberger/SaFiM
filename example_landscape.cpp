@@ -1,4 +1,4 @@
-#include "landscape.h"
+#include "example_landscape.h"
 
 namespace wildland_firesim {
 

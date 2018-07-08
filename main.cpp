@@ -2,7 +2,7 @@
 #include <QtCore/QCoreApplication>
 #include <clocale>
 #include "simulation.h"
-#include "landscape.h"
+#include "example_landscape.h"
 #include "firemap.h"
 
 using namespace ::wildland_firesim;
