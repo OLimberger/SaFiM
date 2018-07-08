@@ -66,7 +66,7 @@ public:
      * \param durationOfBurn
      * \return
      */
-    std::string storeWeatherData(FireWeather &weather, float durationOfBurn);
+    std::string storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn);
 
     std::vector<std::string> weatherData;
 };

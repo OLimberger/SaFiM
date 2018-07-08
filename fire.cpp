@@ -14,7 +14,7 @@ Fire::Fire() : burningCellInformationVector()
 }
 
 void
-Fire::spreadFire(LandscapeInterface *landscape, FireWeather weather, int timestepLength)
+Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weather, int timestepLength)
 {
     //create empty pointFireSource vector and correspondend vector with remaining time
     std::vector<pointFireSourceInformation> pointFireSourceInformationVector;
@@ -38,14 +38,16 @@ Fire::spreadFire(LandscapeInterface *landscape, FireWeather weather, int timeste
         float fuelLoad = cell->liveBiomass +
                 cell->deadBiomass;
         float degreeOfCuring = cell->deadBiomass / fuelLoad;
-        float fuelMoisture = estimateGrassFuelMoisture(weather.temperature, weather.relHumidity,
+        float fuelMoisture = estimateGrassFuelMoisture(weather.temperature,
+                                                       weather.relHumidity,
                                                        degreeOfCuring);
         float availableFuel = fuelLoad * estimateFuelAvailability(fuelMoisture);
 
         //calculate headfire rate of spread
         //float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelMoisture, weather.windSpeed);
         float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelLoad, fuelMoisture,
-                                                                   weather.relHumidity, weather.windSpeed);
+                                                                   weather.relHumidity,
+                                                                   weather.windSpeed);
 
         // initialize fireline Intensity sum for vegetation effects
         float sumIntensity = 0.0;
@@ -224,7 +226,8 @@ Fire::spreadFire(LandscapeInterface *landscape, FireWeather weather, int timeste
                             newBurningCell.spreadDirection.push_back(direction[l][ll]);
                             //simulate fire spread using the remaining time
                             float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelLoad, fuelMoisture,
-                                                                                       weather.relHumidity, weather.windSpeed);
+                                                                                       weather.relHumidity,
+                                                                                       weather.windSpeed);
                             /*
                             float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelMoisture,
                                                                                        weather.windSpeed);
@@ -246,7 +249,7 @@ Fire::spreadFire(LandscapeInterface *landscape, FireWeather weather, int timeste
 }
 
 void
-Fire::initiateWildFire(LandscapeInterface *landscape, FireWeather weather)
+Fire::initiateWildFire(LandscapeInterface *landscape, const FireWeatherVariables &weather)
 {
     //set counter for burning cells to zero as no cell is burning before the fire is ignited
     numberOfCellsBurning = 0;

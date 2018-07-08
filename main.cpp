@@ -2,8 +2,10 @@
 #include <QtCore/QCoreApplication>
 #include <clocale>
 #include "simulation.h"
-#include "example_landscape.h"
+#include "WFS_landscape.h"
 #include "firemap.h"
+#include "fire.h"
+#include "WFS_fireweather.h"
 
 using namespace ::wildland_firesim;
 
@@ -79,7 +81,7 @@ int main(int argc, char *argv[] )
     //create instance of simulation class
     Simulation fireSimulation;
     //initialize fire weather
-    FireWeather weather;
+    FireWeather weatherSimulation;
     //initialize output
     FireMap output;
     FireMap * outputPtr = &output;
@@ -109,7 +111,7 @@ int main(int argc, char *argv[] )
     if(fireSimulation.simulateFireWeather){
         if(commandlineParser.isSet(fireWeatherFileOption)){
             fireSimulation.nameOfMeteorologicalParameterFile = commandlineParser.value(fireWeatherFileOption).toStdString();
-            weather.importMeteorologicalParameter(fireSimulation.nameOfMeteorologicalParameterFile);
+            weatherSimulation.importMeteorologicalParameter(fireSimulation.nameOfMeteorologicalParameterFile);
         } else {
             std::cerr << "name of meteorological parameter file has to be specified.";
             std::exit(1);
@@ -122,9 +124,10 @@ int main(int argc, char *argv[] )
             std::exit(1);
         }
     } else {
-        if(commandlineParser.isSet(fixedFireWeatherOption)){
+        if (commandlineParser.isSet(fixedFireWeatherOption)) {
+            FireWeatherVariables weather;
             std::string nameOfFixedWeatherParameterFile = commandlineParser.value(fixedFireWeatherOption).toStdString();
-            weather.getFixedFireWeatherParameter(nameOfFixedWeatherParameterFile);
+            weatherSimulation.getFixedFireWeatherParameter(nameOfFixedWeatherParameterFile, weather);
         } else {
             std::string nameOfFixedWeatherParameterFile = "fixed_fireweather.txt";
         }
@@ -132,9 +135,11 @@ int main(int argc, char *argv[] )
     }
 
     //start simulation(s) and data log
-    for(int i = 0; i<fireSimulation.numberOfRuns; i++){
+    for (int i = 0; i<fireSimulation.numberOfRuns; i++) {
+        // create container for weather data
+        FireWeatherVariables weather;
         // create model landscape
-        ExampleLandscape modelLandscape;
+        WFS_Landscape modelLandscape;
         if(fireSimulation.importLandscape){
             modelLandscape.importLandscapeFromFile();
         } else {

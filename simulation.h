@@ -5,7 +5,7 @@
 #include <string>
 #include "utility.h"
 #include "globals.h"
-#include "example_landscape.h"
+#include "WFS_landscape.h"
 #include "fire.h"
 #include "firemap.h"
 
@@ -23,7 +23,7 @@ public:
      * \param weather
      * \param output
      */
-    void runSimulation(ExampleLandscape *landscape, FireWeather weather, FireMap *output);
+    void runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather, FireMap *output);
 
     int numberOfRuns;
     int maxFireDuration;

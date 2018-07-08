@@ -132,7 +132,7 @@ FireMap::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::s
 
 //functions to store data in strings
 std::string
-FireMap::storeWeatherData(FireWeather &weather, float durationOfBurn)
+FireMap::storeWeatherData(FireWeatherVariables &weather, float durationOfBurn)
 {
     std::stringstream weatherData;
     weatherData << durationOfBurn << ",";

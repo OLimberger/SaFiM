@@ -8,7 +8,7 @@ Simulation::Simulation()
 }
 
 void
-Simulation::runSimulation(ExampleLandscape *landscape, FireWeather weather, FireMap *output)
+Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather, FireMap *output)
 {
     //starting conditions
     int numberOfTimesteps = 1;
