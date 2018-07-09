@@ -8,7 +8,8 @@ Simulation::Simulation()
 }
 
 void
-Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather, FireMap *output)
+Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather,
+                          FireWeather weatherSim, FireMap *output)
 {
     //starting conditions
     int numberOfTimesteps = 1;
@@ -16,10 +17,10 @@ Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &
     float nextHour = 1.0;
 
     //weather conditions at begin of fire
-    weather.windyConditions = true; //at start of the fire there is wind
+    weatherSim.windyConditions = true; //at start of the fire there is wind
     if(simulateFireWeather){
-        weather.setStartingTime(12);
-        weather.calculateFireWeather(whichMonth, 0);
+        weatherSim.setStartingTime(12);
+        weatherSim.calculateFireWeather(whichMonth, 0);
         output->weatherData.push_back(output->storeWeatherData(weather, durationOfBurn));
     }
 
@@ -33,7 +34,7 @@ Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &
     //simulate fire spread
     while((fire.numberOfCellsBurning != 0) && (numberOfTimesteps < maxFireDuration)){
         if(simulateFireWeather && durationOfBurn >= nextHour){
-            weather.calculateFireWeather(whichMonth, static_cast<int>(std::floor(durationOfBurn)));
+            weatherSim.calculateFireWeather(whichMonth, static_cast<int>(std::floor(durationOfBurn)));
             output->weatherData.push_back(output->storeWeatherData(weather, durationOfBurn));
             nextHour = std::floor(durationOfBurn+1);
         }

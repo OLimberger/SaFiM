@@ -1,4 +1,6 @@
 #include "firemap.h"
+#include <sstream>
+#include <fstream>
 
 namespace wildland_firesim {
 
@@ -132,7 +134,7 @@ FireMap::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::s
 
 //functions to store data in strings
 std::string
-FireMap::storeWeatherData(FireWeatherVariables &weather, float durationOfBurn)
+FireMap::storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn)
 {
     std::stringstream weatherData;
     weatherData << durationOfBurn << ",";

@@ -150,7 +150,7 @@ int main(int argc, char *argv[] )
         //output.writeVegetationDataToCSV(modelLandscape, output.setfileName("vegetation_data", ".csv", i));
 
         //fire simulation
-        fireSimulation.runSimulation(&modelLandscape, weather, outputPtr);
+        fireSimulation.runSimulation(&modelLandscape, weather, weatherSimulation, outputPtr);
 
         //creating simulation output
         output.writeBurnMapToASCII(modelLandscape, output.setfileName("burn_map", ".asc", i ));
