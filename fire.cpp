@@ -62,7 +62,7 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
                                                                   burningCellInformationVector[i].spreadDirection[k]);
 
             //sum fireline within cell
-            sumIntensity = sumIntensity+calculateFirelineIntensity(rateOfSpread,availableFuel,heatYield);
+            sumIntensity = sumIntensity+calculateFirelineIntensity(rateOfSpread,availableFuel);
 
             //if vertex is already reached by the fire continue.
             if(burningCellInformationVector[i].burnStatus[k] >= 1.f) continue;
@@ -108,7 +108,7 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
                     newPointFireSource.vCoord = burningCellInformationVector[i].vCoordSource+1;
                 }
                 //calculate fireline intensity of the section of the fire front
-                newPointFireSource.fireIntensity = (calculateFirelineIntensity(rateOfSpread,availableFuel,heatYield));
+                newPointFireSource.fireIntensity = (calculateFirelineIntensity(rateOfSpread,availableFuel));
                 //calculate remaining time at certain pointFireSource
                 newPointFireSource.remainingTime = (static_cast<int>(round(((burningCellInformationVector[i].burnStatus[k]-1) *
                                                                             distance_to_cell_boundary[k]) / rateOfSpread)));
@@ -130,13 +130,6 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
         //access the respective cell
         Cell* cell = landscape->getCellInformation(x,y);
 
-        //calculate input variables for fire spread
-        float fuelLoad = cell->liveBiomass +
-                cell->deadBiomass;
-        float degreeOfCuring = (cell->deadBiomass / fuelLoad);
-        float fuelMoisture = estimateGrassFuelMoisture(weather.temperature, weather.relHumidity,
-                                                       degreeOfCuring);
-
         //summation of burnstatus within respective cell
         float summarizedBurnStatus = 0.f;
         for(size_t q = 0; q<burningCellInformationVector[i].burnStatus.size(); q++){
@@ -149,9 +142,10 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
 
             cell->state = CellState::BurnedOut;
             //remove burned-out cells from burning cell vector
-            burningCellInformationVector.erase(burningCellInformationVector.begin()+i);
+            burningCellInformationVector.erase(burningCellInformationVector.begin() + i);
             numberOfCellsBurning--;
 
+            //TODO: vegetation class interface
             //apply fire effects (sample code)
             //biomass consumption
             /*float consumedBiomass = fuelLoad*estimateFuelAvailability(fuelMoisture);
@@ -222,7 +216,7 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
                         newBurningCell.yCoord = cellsToIgnite[l][1];
                         //add direction to spreadDirection vector
                         //add travel distance of 0 to burnStatus vector
-                        for(int ll=0; ll<numberOfCellInternSpreadDirections; ll++){
+                        for(size_t ll=0; ll<numberOfCellInternSpreadDirections; ll++){
                             newBurningCell.spreadDirection.push_back(direction[l][ll]);
                             //simulate fire spread using the remaining time
                             float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelLoad, fuelMoisture,
@@ -408,7 +402,7 @@ Fire::calculateDirectionalRateOfSpread(const float windSpeed, const int windDire
         rateOfSpread = (b*(a+c*cos(theta))) / std::sqrt(pow(a,2) * std::pow(std::sin(theta), 2) +
                                                         std::pow(b,2) * std::pow(std::cos(theta),2));
     }
-    return rateOfSpread;
+    return static_cast<float>(rateOfSpread);
 }
 
 float
@@ -431,8 +425,8 @@ Fire::calculateCellIgnitionProbability(const float intensity, //const int critic
                                        const float moistureContent)
 {
     //int latentHeat = 2600;
-    return 1.f/(1.f + std::exp(-(-5.6f - 6.8f * moistureContent
-                                 + exp(-0.15f + std::pow(intensity, 0.117f)))));
+    return static_cast<float>(1.f/(1.f + std::exp(-(-5.6f - 6.8f * moistureContent
+                                 + exp(-0.15f + std::pow(intensity, 0.117f))))));
     //return std::sqrt(intensity / (criticalIntensity + (latentHeat * moistureContent)));
 }
 
@@ -443,8 +437,7 @@ Fire::calculateInitialIgnitionProbability(const float grassFuelMoisture){
 
 
 float
-Fire::calculateFirelineIntensity(const float rateOfSpread, const float availableFuelLoad,
-                                 const int heatYield)
+Fire::calculateFirelineIntensity(const float rateOfSpread, const float availableFuelLoad)
 {
     // fuel load is converted from g/m³ to kg/m²
     return rateOfSpread * (availableFuelLoad / 1000) * heatYield;

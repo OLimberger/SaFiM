@@ -77,8 +77,6 @@ public:
 
 private:
     int heatYield = 17000;
-    int criticalIntensityYoungWoody = 4000;
-    //int criticalIntensityGrass = 450; //original: 150
 
     struct pointFireSourceInformation{
         int uCoord;
@@ -152,8 +150,7 @@ private:
      * \param heatYield
      * \return
      */
-    float calculateFirelineIntensity(const float rateOfSpread, const float availableFuelLoad,
-                                     const int heatYield);
+    float calculateFirelineIntensity(const float rateOfSpread, const float availableFuelLoad);
 
     /*!
      * \brief calculateCellIgnitionProbability
