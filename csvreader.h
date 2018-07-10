@@ -28,7 +28,7 @@ public:
 
 private:
   char m_delimiter;
-  char m_quote;
+  //char m_quote;
   char m_comment;
 };
 

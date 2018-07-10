@@ -52,7 +52,7 @@ Reader::parse(std::string fileName)
         }else{
 
             //get positions of delimiter within string
-            std::vector<int> pos;
+            std::vector<size_t> pos;
 
             for(size_t i = 0; i < line.length(); i++){
                 if(line[i] == m_delimiter){
