@@ -8,7 +8,7 @@
 #include "WFS_landscape.h"
 #include "WFS_fireweather.h"
 #include "fire.h"
-#include "firemap.h"
+#include "WFS_output.h"
 
 namespace wildland_firesim{
 class Simulation
@@ -25,7 +25,7 @@ public:
      * \param output
      */
     void runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather,
-                       FireWeather weathersim, FireMap *output);
+                       FireWeather weathersim, Output *output);
 
     int numberOfRuns;
     int maxFireDuration;

@@ -124,16 +124,16 @@ FireWeather::calculateFireWeather(int month,int durationOfBurn)
     // estimate hourly temperature by mininmal and maximal temperatures
     float alpha = Tx-Tn;
     float P = Tx-To;
-    float b=(Tp-To)/(std::sqrt(abs(hp-ho)));
+    float b=(Tp-To)/(std::sqrt(std::abs(hp-ho)));
     //TODO: check range of value
     if(t > hn && t <= hx){
         temperature = Tn+alpha*(((t-hn)/(hx-hn))*(Pi/2));
     }
     if(t > hx && t < ho){
-        temperature = To+P*std::sin((Pi/2)+((t-hx)/4)*(Pi/2));
+        temperature = To + P * std::sin((Pi/2)+((t-hx)/4)*(Pi/2));
     }
     if(t >= ho || t <= hp){
-        temperature = To+b*std::sqrt(abs(t-ho));
+        temperature = To + b * std::sqrt(std::abs(t-ho));
     }
 
     //derive relative humidity from distribution

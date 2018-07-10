@@ -3,7 +3,7 @@
 #include <clocale>
 #include "simulation.h"
 #include "WFS_landscape.h"
-#include "firemap.h"
+#include "WFS_output.h"
 #include "fire.h"
 #include "WFS_fireweather.h"
 
@@ -83,8 +83,8 @@ int main(int argc, char *argv[] )
     //initialize fire weather
     FireWeather weatherSimulation;
     //initialize output
-    FireMap output;
-    FireMap * outputPtr = &output;
+    Output output;
+    Output * outputPtr = &output;
 
     //setup simulation
     //general parameters

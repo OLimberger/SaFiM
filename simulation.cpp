@@ -9,7 +9,7 @@ Simulation::Simulation()
 
 void
 Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather,
-                          FireWeather weatherSim, FireMap *output)
+                          FireWeather weatherSim, Output *output)
 {
     //starting conditions
     int numberOfTimesteps = 1;

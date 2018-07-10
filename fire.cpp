@@ -123,7 +123,7 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
     }//end cellwise routine for firespread
 
     //cellwise routine for burn-out of cells
-    for(size_t i = 0; i<burningCellInformationVector.size(); i++){
+    for(size_t i = 0; i < burningCellInformationVector.size(); i++){
         int x = burningCellInformationVector[i].xCoord;
         int y = burningCellInformationVector[i].yCoord;
 
