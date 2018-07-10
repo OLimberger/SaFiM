@@ -67,7 +67,7 @@ public:
         int vCoordSource;
         float meanFirelineIntensity;
         std::vector<float> burnStatus;
-        std::vector<float> spreadDirection;
+        std::vector<int> spreadDirection;
     };
 
     std::vector<burningCellInformation> burningCellInformationVector;

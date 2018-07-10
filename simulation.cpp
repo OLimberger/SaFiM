@@ -52,8 +52,8 @@ Simulation::stringToMonth(std::string m){
         {"JUL"}, {"AUG"}, {"SEP"}, {"OCT"}, {"NOV"}, {"DEC"}
     };
     std::vector<Month> enumMonth{
-        {Month::January}, {Month::February}, {Month::March}, {Month::April}, {Month::May}, {Month::June},
-        {Month::June}, {Month::July}, {Month::September}, {Month::October}, {Month::November}, {Month::December},
+        Month::January, Month::February, Month::March, Month::April, Month::May, Month::June,
+        Month::June, Month::July, Month::September, Month::October, Month::November, Month::December
     };
     Month month;
     for(size_t i = 0; i<abrMonth.size(); i++){

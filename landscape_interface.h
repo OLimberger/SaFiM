@@ -7,7 +7,7 @@ namespace wildland_firesim {
 
 class LandscapeInterface {
 public:
-    virtual ~LandscapeInterface() = 0;
+    virtual ~LandscapeInterface() = default;
 
     /*!
      * \brief getWidth
