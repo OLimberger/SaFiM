@@ -106,6 +106,8 @@ int main(int argc, char *argv[] )
 
     //specification fire weather simulation
     fireSimulation.simulateFireWeather = commandlineParser.isSet(simulateWeatherOption);
+    // create container for weather data
+    FireWeatherVariables weather;
 
     //if fire weather is simulated, import meteorological parameters
     if(fireSimulation.simulateFireWeather){
@@ -125,9 +127,8 @@ int main(int argc, char *argv[] )
         }
     } else {
         if (commandlineParser.isSet(fixedFireWeatherOption)) {
-            FireWeatherVariables weather;
             std::string nameOfFixedWeatherParameterFile = commandlineParser.value(fixedFireWeatherOption).toStdString();
-            weatherSimulation.getFixedFireWeatherParameter(nameOfFixedWeatherParameterFile, weather);
+            weatherSimulation.getFixedFireWeatherParameter(nameOfFixedWeatherParameterFile, &weather);
         } else {
             std::string nameOfFixedWeatherParameterFile = "fixed_fireweather.txt";
         }
@@ -136,8 +137,6 @@ int main(int argc, char *argv[] )
 
     //start simulation(s) and data log
     for (int i = 0; i<fireSimulation.numberOfRuns; i++) {
-        // create container for weather data
-        FireWeatherVariables weather;
         // create model landscape
         WFS_Landscape modelLandscape;
         if(fireSimulation.importLandscape){

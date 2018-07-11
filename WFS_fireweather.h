@@ -47,7 +47,7 @@ public:
      * imports fixed fire weather parameter from file.
      * \param fileName
      */
-    void getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables weather);
+    void getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables *weather);
 
     /*!
      * \brief calculateFireWeather

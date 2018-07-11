@@ -11,7 +11,7 @@ FireWeather::FireWeather()
  * \param fileName
  */
 void
-FireWeather::getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables weather){
+FireWeather::getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables *weather){
     auto reader = csv::Reader{',', '#'};
     auto parameters = reader.parse(fileName);
 
@@ -23,10 +23,10 @@ FireWeather::getFixedFireWeatherParameter(const std::string fileName, FireWeathe
                   << " lines in the CSV data\n";
         std::exit(1);
     }
-    weather.temperature = utility::asFloat(parameters[0][0]);
-    weather.relHumidity = utility::asFloat(parameters[1][0]);
-    weather.windSpeed = utility::asFloat(parameters[2][0]);
-    weather.windDirection = utility::asInteger(parameters[3][0]);
+    weather->temperature = utility::asFloat(parameters[0][0]);
+    weather->relHumidity = utility::asFloat(parameters[1][0]);
+    weather->windSpeed = utility::asFloat(parameters[2][0]);
+    weather->windDirection = utility::asInteger(parameters[3][0]);
 }
 
 /*!<
