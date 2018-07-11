@@ -61,7 +61,7 @@ Simulation::stringToMonth(std::string m){
             month = enumMonth[i];
         }
     }
-    return month;
+    return month; //warning if used uninitialized?!
 }
 
 }  // namespace wildland_firesim

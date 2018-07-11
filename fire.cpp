@@ -144,25 +144,6 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
             //remove burned-out cells from burning cell vector
             burningCellInformationVector.erase(burningCellInformationVector.begin() + i);
             numberOfCellsBurning--;
-
-            //TODO: vegetation class interface
-            //apply fire effects (sample code)
-            //biomass consumption
-            /*float consumedBiomass = fuelLoad*estimateFuelAvailability(fuelMoisture);
-            if(consumedBiomass < cell->deadBiomass){
-                cell->deadBiomass = cell->deadBiomass - consumedBiomass;
-            }
-            else
-            {
-                cell->liveBiomass = cell->liveBiomass - (consumedBiomass - cell->deadBiomass);
-                cell->deadBiomass = 0;
-            }
-            //removal of seedlings
-
-        if(meanFirelineIntensity[i] > 3000.0){
-            //if fireline intensity > 3000 remove all seedlings within cell (not implemented in the WFS)
-        }
-        */
         }
     } //end cellwise routine for cell burn-out
 
@@ -413,8 +394,8 @@ Fire::estimateGrassFuelMoisture(const float temperature, const float relativeHum
     if(curing == 0.f ){
         fuelMoisture = 1.f;
     } else (
-        fuelMoisture = ((97.7f + 4.06f * relativeHumidity) /
-                        (temperature + 6.f) - .00854f * relativeHumidity +
+        fuelMoisture = (((97.7f + 4.06f * relativeHumidity) /
+                        (temperature + 6.f)) - .00854f * relativeHumidity +
                         (3000.f / (curing * 100)) - 30.f) / 100 );
 
     return fuelMoisture;

@@ -26,6 +26,7 @@ public:
     virtual Cell *getCellInformation(int x, int y) = 0;
 
     virtual int getCellSize() const noexcept = 0;
+
 };
 
 }  // namespace wildland_firesim

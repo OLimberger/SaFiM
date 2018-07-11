@@ -193,7 +193,7 @@ WFS_Landscape::generateLandscapeFromFile(const std::string &fileName)
     if(percentageGrass < 1.f){
         //calculate number of clusters
         int numberOfClusters = static_cast<int>(std::round((percentageNonFlammable * static_cast<float>(datasize)) /
-                                           (clusterDensity * meanClusterSize * meanClusterSize) ));
+                                                           (clusterDensity * meanClusterSize * meanClusterSize) ));
         //create each cluster by assigning vegetation parameters to individual cells within landscape
         for(int m = 0; m<numberOfClusters; m++){
             //selection of random coordinates (central point in cluster)

@@ -16,8 +16,6 @@ public:
     float deadBiomass;
     float liveBiomass;
 
-    float elevation = 0;
-
     CellState state;
 };
 
