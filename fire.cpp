@@ -350,7 +350,7 @@ Fire::initiatePrescribedBurning()
 
 
 float
-Fire::calculateHeadFireRateOfSpread(float fuelload, float moistureContent, float relHumidity, float windspeed)
+Fire::calculateHeadFireRateOfSpread(const float fuelload, const float moistureContent, const float relHumidity, const float windspeed)
 {
 
     return 0.4745+(0.0002*fuelload)-(0.6648*moistureContent)-

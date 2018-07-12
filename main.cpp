@@ -84,7 +84,6 @@ int main(int argc, char *argv[] )
     FireWeather weatherSimulation;
     //initialize output
     Output output;
-    Output * outputPtr = &output;
 
     //setup simulation
     //general parameters
@@ -149,7 +148,7 @@ int main(int argc, char *argv[] )
         //output.writeVegetationDataToCSV(modelLandscape, output.setfileName("vegetation_data", ".csv", i));
 
         //fire simulation
-        fireSimulation.runSimulation(&modelLandscape, weather, weatherSimulation, outputPtr);
+        fireSimulation.runSimulation(&modelLandscape, weather, weatherSimulation, &output);
 
         //creating simulation output
         output.writeBurnMapToASCII(modelLandscape, output.setfileName("burn_map", ".asc", i ));

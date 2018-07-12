@@ -17,8 +17,7 @@ WFS_Landscape::getHeight() const noexcept
     return m_height;
 }
 
-Cell
-*WFS_Landscape::getCellInformation(int x, int y)
+Cell *WFS_Landscape::getCellInformation(int x, int y)
 {
     return &cellInformation[static_cast<size_t>(y * m_width + x)];
 }
@@ -181,7 +180,6 @@ WFS_Landscape::generateLandscapeFromFile(const std::string &fileName)
 
     //set vegetation type
     //standard vegetation is grass
-
     for(auto &cell : cellInformation){
         cell.type = VegetationType::Grass; //use grass as standard vegetation type
         cell.state = CellState::Unburned;

@@ -19,7 +19,7 @@ Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &
     //weather conditions at begin of fire
     weatherSim.windyConditions = true; //at start of the fire there is wind
     if(simulateFireWeather){
-        weatherSim.setStartingTime(12);
+        weatherSim.setStartingTime(12); //fires start at 12 o'clock
         weatherSim.calculateFireWeather(whichMonth, 0);
         output->weatherData.push_back(output->storeWeatherData(weather, durationOfBurn));
     }

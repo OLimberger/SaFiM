@@ -97,8 +97,8 @@ private:
      * \param windSpeed
      * \return head fire rate of spread
     */
-    float calculateHeadFireRateOfSpread(float fuelload, float moistureContent, float relHumidity, float windspeed);
-    //(const float moistureContent, const float windSpeed);
+    float calculateHeadFireRateOfSpread(const float fuelload, const float moistureContent,
+                                        const float relHumidity, const float windspeed);
 
     /*!
      * \brief calculateDirectionalRateOfSpread
