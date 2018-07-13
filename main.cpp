@@ -69,47 +69,54 @@ parseArguments(int argc, char *argv[])
 {
     progname = argv[0];
 
-    for (int i = 1 ; i < argc; i++) {
-        if ((argv[i][0] != '\0') && (argv[i][0] == '-') && (argv[i][1] != '\0')) {
-            switch (argv[i][1]) {
-            case 'h':
-            default:
-                usage();
-            case 'v':
-                printf("WildlandFireSimulator %d.%d\n", VERSION_MAJOR, VERSION_MINOR);
-                exit(0);
-            case 'l':
-                landscapeFile = argv[++i];
-                break;
-            case 'a':
-                importLandscape = true;
-                break;
-            case 's':
-                simulateFireWeather = true;
-                break;
-            case 'w':
-                weatherFile = argv[++i];
-                break;
-            case 'm':
-                month = argv[++i];
-                break;
-            case 'b':
-                fixedWeatherFile = argv[++i];
-                break;
-            case 't':
-                timestepLength = atoi(argv[++i]);
-                break;
-            case 'd':
-                maximalFireDuration = atoi(argv[++i]);
-                break;
-            case 'r':
-                numberOfRuns = atoi(argv[++i]);
-                break;
-            case 'c':
-                centeredIgnitionPoint = true;
-                break;
-            }
+    while (argc > 1 && argv[1][0] == '-') {
+        switch (argv[1][1]) {
+        case 'h':
+        default:
+            usage();
+        case 'v':
+            printf("WildlandFireSimulator %d.%d\n", VERSION_MAJOR, VERSION_MINOR);
+            exit(0);
+        case 'l':
+            landscapeFile = *argv++;
+            argc--;
+            break;
+        case 'a':
+            importLandscape = true;
+            break;
+        case 's':
+            simulateFireWeather = true;
+            break;
+        case 'w':
+            weatherFile = *argv++;
+            argc--;
+            break;
+        case 'm':
+            month = *argv++;
+            argc--;
+            break;
+        case 'b':
+            fixedWeatherFile = *argv++;
+            argc--;
+            break;
+        case 't':
+            timestepLength = atoi(*argv++);
+            argc--;
+            break;
+        case 'd':
+            maximalFireDuration = atoi(*argv++);
+            argc--;
+            break;
+        case 'r':
+            numberOfRuns = atoi(*argv++);
+            argc--;
+            break;
+        case 'c':
+            centeredIgnitionPoint = true;
+            break;
         }
+        argc--;
+        argv++;
     }
 }
 
