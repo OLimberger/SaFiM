@@ -14,12 +14,12 @@ int main(int argc, char *argv[] )
     // Set up Command line parser and Options
     QCoreApplication app{argc, argv};
     std::setlocale(LC_NUMERIC, "C");
-    QCoreApplication::setApplicationName("WildlandFireSimulator");
+    QCoreApplication::setApplicationName("SASaFiM");
     QCoreApplication::setApplicationVersion("0.1");
 
     QCommandLineParser commandlineParser;
 
-    commandlineParser.setApplicationDescription("Wildland Fire Simulator");
+    commandlineParser.setApplicationDescription("South African Savanna Fire Model");
 
     commandlineParser.addHelpOption();
     commandlineParser.addVersionOption();

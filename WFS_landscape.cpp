@@ -17,7 +17,8 @@ WFS_Landscape::getHeight() const noexcept
     return m_height;
 }
 
-Cell *WFS_Landscape::getCellInformation(int x, int y)
+Cell
+*WFS_Landscape::getCellInformation(int x, int y)
 {
     return &cellInformation[static_cast<size_t>(y * m_width + x)];
 }
