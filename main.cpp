@@ -10,14 +10,14 @@
 /*! \mainpage South African Savanna Fire Model
  * Fire is an important driver of vegetation dynamics in savanna ecosystems, yet often strongly
  * simplified in ecological models. This project aims to provide an integrative module as well as
- * to provide a stand-alone appliction for testing purposes. Fire behavior in SASaFiM emerges from
- * landscape parameters and weather conditions. The model landscape consists of grid cells with a
- * specified vegetation type and certain amounts of live and dead biomass. SASaFiM calculates a
- * one-dimensional rate of spread using an empirical model. It then extends it into a
- * two-dimensional spread using a rasterization of Huygens wavelet propagation principle. Overall,
- * the model is capable to simulate the emergence, spread and resulting burn patterns across
- * spatial scales in a realistic manner taking into account seasonality as a source of landscape
- * heterogeneity.
+ * a stand-alone appliction.
+ * Fire behavior in SASaFiM emerges from landscape parameters and weather conditions. The model
+ * landscape consists of grid cells with a specified vegetation type and certain amounts of live
+ * and dead biomass. SASaFiM calculates a one-dimensional rate of spread using an empirical model.
+ * It then extends it into a two-dimensional spread using a rasterization of Huygens wavelet
+ * propagation principle. Overall, the model is capable to simulate the emergence, spread and
+ * resulting burn patterns across spatial scales in a realistic manner taking into account
+ * seasonality as a source of landscape heterogeneity.
  * - \subpage Usage as integrative module
  * - \subpage Wildland Fire Simulator
  */
