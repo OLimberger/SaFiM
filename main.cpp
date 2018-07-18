@@ -18,8 +18,6 @@
  * propagation principle. Overall, the model is capable to simulate the emergence, spread and
  * resulting burn patterns across spatial scales in a realistic manner taking into account
  * seasonality as a source of landscape heterogeneity.
- * - \subpage Usage as integrative module
- * - \subpage Wildland Fire Simulator
  */
 
 
