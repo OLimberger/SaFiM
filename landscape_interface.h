@@ -5,8 +5,13 @@
 
 namespace wildland_firesim {
 
+/*!
+ * \brief The LandscapeInterface class
+ * is a virtual class providing the interface for fire-landscape interactions.
+ */
 class LandscapeInterface {
 public:
+
     virtual ~LandscapeInterface() = default;
 
     /*!
@@ -23,8 +28,18 @@ public:
      */
     virtual int getHeight() const noexcept = 0;
 
+    /*!
+     * \brief getCellInformation
+     * \param x
+     * \param y
+     * \return
+     */
     virtual Cell *getCellInformation(int x, int y) = 0;
 
+    /*!
+     * \brief getCellSize
+     * \return
+     */
     virtual int getCellSize() const noexcept = 0;
 
 };

@@ -7,7 +7,7 @@ namespace wildland_firesim {
 
 /*!
  * \brief The Cell class
- * The cell class holds the vegetation parameters, elevation and the cell state.
+ * holds the vegetation parameters and the cell state.
  */
 class Cell
 {

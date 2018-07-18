@@ -15,19 +15,46 @@ namespace utility {
 
 void _assert(bool condition, const char *message);
 
-// Returns a pseudo-random float in [0..1)
+/*!
+ * \brief random
+ * returns a pseudo-random float in [0..1)
+ * \return
+ */
 float random();
 
-// Returns a pseudo-random float in [0..top)
+/*!
+ * \brief random
+ * returns a pseudo-random float in [0..top)
+ * \param top
+ * \return
+ */
 int random(int top);
 
-// Returns a pseudo-random float in [min..max)
+/*!
+ * \brief random
+ * returns a pseudo-random float in [min..max)
+ * \param min
+ * \param max
+ * \return
+ */
 float random(float min, float max);
 
-// Returns a weibull-distributed pseudo-random float
+/*!
+ * \brief weibull_random
+ * returns a weibull-distributed pseudo-random float
+ * \param scale
+ * \param form
+ * \return
+ */
 float weibull_random(float scale, float form);
 
-//Returns a normal-distributed pseudo-random float
+/*!
+ * \brief normal_random
+ * returns a normal-distributed pseudo-random float
+ * \param mean
+ * \param sd
+ * \return
+ */
 float normal_random(float mean, float sd);
 
 //functions to cast strings to numeric values

@@ -19,7 +19,7 @@ struct FireWeatherVariables {
 
 /*!
  * \brief The Fire class
- * Contains all functions and variables required for the simulation of fire spread within the supplied
+ * contains all functions and variables required for the simulation of fire spread within the supplied
  * landscape and at certain weather conditions.
  */
 class Fire
@@ -28,7 +28,7 @@ public:
     Fire();
     /*!
      * \brief spreadFire
-     * Function to simulate fire spread for one timestep. The fire spread algorithm iterates over each cell
+     * is a function to simulate fire spread within one timestep. The fire spread algorithm iterates over each cell
      * burning, calculating the burn status of a cell using the rate of spread, timestep length and distance
      * to the next vertex. If the fire reaches a new vertex, its coordinates are appended to the point fire
      * source vector. Note that wind direction refers to the direction the wind is blowing to.
@@ -60,6 +60,10 @@ public:
      */
     void setCenteredIgnitionPoint(LandscapeInterface *landscape);
 
+    /*!
+     * \brief The burningCellInformation struct
+     * holds information of burning cells required for the spread simulation.
+     */
     struct burningCellInformation{
         int xCoord;
         int yCoord;

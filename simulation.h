@@ -11,15 +11,21 @@
 #include "WFS_output.h"
 
 namespace wildland_firesim{
+/*!
+ * \brief The Simulation class
+ * contains function to simulate fire within a landscape either with static weather conditions or a
+ * weather simulation.
+ */
 class Simulation
 {
 public:
     Simulation();
 
     Month stringToMonth(std::string m);
+
     /*!
      * \brief runSimulation
-     * Function to run the simulation and log output data.
+     * runs the simulation and logs output data.
      * \param landscape
      * \param weather
      * \param output

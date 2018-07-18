@@ -9,7 +9,7 @@ namespace wildland_firesim {
 
 /*!
  * \brief The FireMap class
- * Class containing function to define the output of the model.
+ * contains function to define the output of the model.
  */
 class Output
 {

@@ -20,16 +20,21 @@ struct distrParameter {
     T param2;
 };
 
+/*!
+ * \brief The WindCondition struct
+ * contains probabilities for change of wind conditions from windy and calm and to stay calm.
+ */
 struct WindCondition {
-    float stayCalm;
     float windyToCalm;
+    float stayCalm;
+
 };
 
 constexpr int WindDirectionsCount = 8;
 
 /*!
  * \brief The FireWeather class
- * Containing functions and parameter to simulate fire weather.
+ * containing functions and parameter to simulate fire weather.
  */
 class FireWeather
 {
@@ -37,7 +42,7 @@ public:
     FireWeather();
     /*!
      * \brief importMeteorologicalParameter
-     * extract meteorological parameters from file.
+     * extracts meteorological parameters from file.
      * \param fileName
      */
     void importMeteorologicalParameter(const std::string fileName);
@@ -62,6 +67,11 @@ public:
      */
     void calculateFireWeather(int month, int durationOfBurn);
 
+    /*!
+     * \brief setStartingTime
+     * sets time to start a fire.
+     * \param startOfFire
+     */
     void setStartingTime(int startOfFire);
 
     //Meteorological Variables
