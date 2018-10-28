@@ -1,6 +1,7 @@
-#include <QtCore/QCommandLineParser>
-#include <QtCore/QCoreApplication>
 #include <clocale>
+#include <cstdio>
+#include <cstdlib>
+
 #include "simulation.h"
 #include "WFS_landscape.h"
 #include "WFS_output.h"
@@ -23,74 +24,126 @@
 
 using namespace ::wildland_firesim;
 
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 1
+
+static const char *progname;
+
+static const char *landscapeFile;
+static const char *month;
+static const char *weatherFile;
+
+static const char *fixedWeatherFile = "fixed_fireweather.txt";
+
+static int timestepLength = 15;
+static int maximalFireDuration = -1;
+static int numberOfRuns = 1;
+
+bool importLandscape;
+bool simulateFireWeather;
+bool centeredIgnitionPoint;
+
+[[noreturn]] static void
+usage()
+{
+    fprintf(stderr, "usage: %s OPTIONS\n", progname);
+    fprintf(stderr, "Wildland Fire Simulator\n\nOptions:\n");
+    fprintf(stderr, "\t-h\tDisplays this help.\n");
+    fprintf(stderr, "\t-v\tDisplays version information.\n");
+    fprintf(stderr, "\t-l <landscape-file>\tCSV file containing parameters for landscape.\n");
+    fprintf(stderr, "\t-a\tImport landscape from file.\n");
+    fprintf(stderr, "\t-s\tSimulate fire weather.\n");
+    fprintf(stderr, "\t-w <weather-file>\tThe CSV file containing the meteorological parameters.\n");
+    fprintf(stderr, "\t-m <month>\tThe month for which the fire weather is simulated.\n");
+    fprintf(stderr, "\t-b <fixed-weather-file-name>\tFile name for parameter list.\n");
+    fprintf(stderr, "\t-t <timestep-length>\tLength of timesteps.\n");
+    fprintf(stderr, "\t-d <maximal-fire-duration>\tMaximal duration of the fire simulation.\n");
+    fprintf(stderr, "\t-r <number-of-runs>\tNumber of model runs.\n");
+    fprintf(stderr, "\t-c\tCentered ignition point.\n");
+
+    exit(1);
+}
+
+static void
+parseArguments(int argc, char *argv[])
+{
+    progname = argv[0];
+
+    while (argc > 1 && argv[1][0] == '-') {
+        switch (argv[1][1]) {
+        case 'h':
+        default:
+            usage();
+        case 'v':
+            printf("WildlandFireSimulator %d.%d\n", VERSION_MAJOR, VERSION_MINOR);
+            exit(0);
+        case 'l':
+            landscapeFile = *argv++;
+            argc--;
+            break;
+        case 'a':
+            importLandscape = true;
+            break;
+        case 's':
+            simulateFireWeather = true;
+            break;
+        case 'w':
+            weatherFile = *argv++;
+            argc--;
+            break;
+        case 'm':
+            month = *argv++;
+            argc--;
+            break;
+        case 'b':
+            fixedWeatherFile = *argv++;
+            argc--;
+            break;
+        case 't':
+            timestepLength = atoi(*argv++);
+            argc--;
+            break;
+        case 'd':
+            maximalFireDuration = atoi(*argv++);
+            argc--;
+            break;
+        case 'r':
+            numberOfRuns = atoi(*argv++);
+            argc--;
+            break;
+        case 'c':
+            centeredIgnitionPoint = true;
+            break;
+        }
+        argc--;
+        argv++;
+    }
+}
+
 int main(int argc, char *argv[] )
 {
-    // Set up Command line parser and Options
-    QCoreApplication app{argc, argv};
-    std::setlocale(LC_NUMERIC, "C");
-    QCoreApplication::setApplicationName("SASaFiM");
-    QCoreApplication::setApplicationVersion("0.1");
+    parseArguments(argc, argv);
 
-    QCommandLineParser commandlineParser;
-
-    commandlineParser.setApplicationDescription("South African Savanna Fire Model");
-
-    commandlineParser.addHelpOption();
-    commandlineParser.addVersionOption();
-
-    // Add option for the landscape file (-l).
-    QCommandLineOption landscapeFileOption("l", "CSV file containing parameters for landscape generation",
-                                           "landscape-file");
-    commandlineParser.addOption(landscapeFileOption);
-
-    // Add the option if the landscape should be imported from ascii files. It uses (-a).
-    QCommandLineOption importLandscapeOption("a", "import landscape from file");
-    commandlineParser.addOption(importLandscapeOption);
-
-    // Add the option if the weather should be simulated. It uses (-s).
-    QCommandLineOption simulateWeatherOption("s", "Simulate fire weather");
-    commandlineParser.addOption(simulateWeatherOption);
-
-    // Add option for the meteorological parameter file (-w).
-    QCommandLineOption fireWeatherFileOption("w", "The CSV file containing the meteorological parameters",
-                                             "weather-file");
-    commandlineParser.addOption(fireWeatherFileOption);
-
-    // Add option to select month for fire weather simulation (-m).
-    QCommandLineOption monthForSimulationOption("m", "The month for which the fire weather is simulated",
-                                                "month");
-    commandlineParser.addOption(monthForSimulationOption);
-
-    // Add options to set fire weather variables (-b).
-    QCommandLineOption fixedFireWeatherOption("b", "file name for parameterliste",
-                                              "fixed-weather-file-name");
-    fixedFireWeatherOption.setDefaultValue("fixed_fireweather.txt");
-    commandlineParser.addOption(fixedFireWeatherOption);
-
-    // Add option to set length of timesteps (-t).
-    QCommandLineOption timestepLengthOption("t", "length of timesteps",
-                                            "timestep-length");
-    timestepLengthOption.setDefaultValue("15");
-    commandlineParser.addOption(timestepLengthOption);
-
-    // Add option to set maximal fire duration (-d).
-    QCommandLineOption maxFireDurationOption("d", "maximal duration of the fire simulation",
-                                             "maximal-fire-duration");
-    maxFireDurationOption.setDefaultValue("5400");
-    commandlineParser.addOption(maxFireDurationOption);
-
-    // Add option to set number of model runs (-r).
-    QCommandLineOption numberOfRunsOption("r", "number of model runs",
-                                          "number-of-runs");
-    numberOfRunsOption.setDefaultValue("1");
-    commandlineParser.addOption(numberOfRunsOption);
-
-    // Add option to set ignition location to center (-c).
-    QCommandLineOption centeredIgnition("c", "centered ignition point");
-    commandlineParser.addOption(centeredIgnition);
-
-    //process user options
-    commandlineParser.process(app);
+    // We either need a landscape file (ASCII grid, option -a) or a parameter file to generate a
+    // landscape (option -l)
+    if (!importLandscape && !landscapeFile) {
+        fprintf(stderr, "error: either an ASCII grid or a landscape parameter file must be supplied\n");
+        exit(1);
+    }
+    if (importLandscape && landscapeFile) {
+        fprintf(stderr, "error: an ASCII grid is imported, using a parameter file is invalid\n");
+        exit(1);
+    }
+    if (simulateFireWeather) {
+        if (!weatherFile) {
+            fprintf(stderr, "error: name of meteorological parameter file has to be specified\n");
+            exit(1);
+        }
+        if (!month) {
+            fprintf(stderr, "error: month for fire weather simulation has to be specified\n");
+            exit(1);
+        }
+    }
 
     //create instance of simulation class
     Simulation fireSimulation;
@@ -101,51 +154,28 @@ int main(int argc, char *argv[] )
 
     //setup simulation
     //general parameters
-    fireSimulation.timestepLength = commandlineParser.value(timestepLengthOption).toInt();
-    fireSimulation.maxFireDuration = commandlineParser.value(maxFireDurationOption).toInt();
-    fireSimulation.numberOfRuns = commandlineParser.value(numberOfRunsOption).toInt();
+    fireSimulation.timestepLength = timestepLength;
+    fireSimulation.maxFireDuration = maximalFireDuration;
+    fireSimulation.numberOfRuns = numberOfRuns;
 
     //import landscape option - uses files in folder
-    fireSimulation.importLandscape = commandlineParser.isSet(importLandscapeOption);
+    fireSimulation.importLandscape = importLandscape;
+
     //enquire name of file for landscape creation
-    if(!fireSimulation.importLandscape){
-        fireSimulation.nameOfLandscapeParameterFile = commandlineParser.value(landscapeFileOption).toStdString();
-        if(!commandlineParser.isSet(landscapeFileOption)){
-               fireSimulation.nameOfLandscapeParameterFile = "landscape_s1.txt";
-        }
+    if(!importLandscape){
+        fireSimulation.nameOfLandscapeParameterFile = landscapeFile;
     }
+
     //specification of ignition location
-    fireSimulation.igniteCentralVertex = commandlineParser.isSet(centeredIgnition);
+    fireSimulation.igniteCentralVertex = centeredIgnitionPoint;
 
     //specification fire weather simulation
-    fireSimulation.simulateFireWeather = commandlineParser.isSet(simulateWeatherOption);
-    // create container for weather data
-    FireWeatherVariables weather;
+    fireSimulation.simulateFireWeather = simulateFireWeather;
+    auto weather = FireWeatherVariables{};
 
-    //if fire weather is simulated, import meteorological parameters
-    if(fireSimulation.simulateFireWeather){
-        if(commandlineParser.isSet(fireWeatherFileOption)){
-            fireSimulation.nameOfMeteorologicalParameterFile = commandlineParser.value(fireWeatherFileOption).toStdString();
-            weatherSimulation.importMeteorologicalParameter(fireSimulation.nameOfMeteorologicalParameterFile);
-        } else {
-            std::cerr << "name of meteorological parameter file has to be specified.";
-            std::exit(1);
-        }
-        if(commandlineParser.isSet(monthForSimulationOption)){
-            fireSimulation.whichMonth = fireSimulation.stringToMonth(
-                        commandlineParser.value(monthForSimulationOption).toStdString());
-        } else {
-            std::cerr << "Month for fire weather simulation has to be specified.";
-            std::exit(1);
-        }
-    } else {
-        if (commandlineParser.isSet(fixedFireWeatherOption)) {
-            std::string nameOfFixedWeatherParameterFile = commandlineParser.value(fixedFireWeatherOption).toStdString();
-            weatherSimulation.getFixedFireWeatherParameter(nameOfFixedWeatherParameterFile, &weather);
-        } else {
-            std::string nameOfFixedWeatherParameterFile = "fixed_fireweather.txt";
-        }
-
+    if (simulateFireWeather) {
+        weatherSimulation.importMeteorologicalParameter(weatherFile);
+        fireSimulation.whichMonth = fireSimulation.stringToMonth(month);
     }
 
     //start simulation(s) and data log
