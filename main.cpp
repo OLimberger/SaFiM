@@ -79,8 +79,9 @@ parseArguments(int argc, char *argv[])
             printf("WildlandFireSimulator %d.%d\n", VERSION_MAJOR, VERSION_MINOR);
             exit(0);
         case 'l':
-            landscapeFile = *argv++;
+            landscapeFile = argv[2];
             argc--;
+            argv++;
             break;
         case 'a':
             importLandscape = true;
@@ -89,28 +90,34 @@ parseArguments(int argc, char *argv[])
             simulateFireWeather = true;
             break;
         case 'w':
-            weatherFile = *argv++;
+            weatherFile = argv[2];
             argc--;
+            argv++;
             break;
         case 'm':
-            month = *argv++;
+            month = argv[2];
             argc--;
+            argv++;
             break;
         case 'b':
-            fixedWeatherFile = *argv++;
+            fixedWeatherFile = argv[2];
             argc--;
+            argv++;
             break;
         case 't':
-            timestepLength = atoi(*argv++);
+            timestepLength = atoi(argv[2]);
             argc--;
+            argv++;
             break;
         case 'd':
-            maximalFireDuration = atoi(*argv++);
+            maximalFireDuration = atoi(argv[2]);
             argc--;
+            argv++;
             break;
         case 'r':
-            numberOfRuns = atoi(*argv++);
+            numberOfRuns = atoi(argv[2]);
             argc--;
+            argv++;
             break;
         case 'c':
             centeredIgnitionPoint = true;
@@ -145,6 +152,14 @@ int main(int argc, char *argv[] )
             exit(1);
         }
     }
+
+    if (landscapeFile != nullptr)
+        printf("landscapeFile=%s\n", landscapeFile);
+    if (month != nullptr)
+        printf("month=%s\n", month);
+    if (weatherFile != nullptr)
+        printf("weatherFile=%s\n", weatherFile);
+    printf("fixedWeatherFile=%s\n", fixedWeatherFile);
 
     //create instance of simulation class
     Simulation fireSimulation;
