@@ -27,21 +27,22 @@ using namespace ::wildland_firesim;
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 1
 
-static const char *progname;
+static const char *progname = nullptr;
 
-static const char *landscapeFile;
-static const char *month;
-static const char *weatherFile;
+static const char *landscapeFile = nullptr;
+static const char *month = nullptr;
+static const char *weatherFile = nullptr;
 
 static const char *fixedWeatherFile = "fixed_fireweather.txt";
 
 static int timestepLength = 15;
-static int maximalFireDuration = -1;
+static int maximalFireDuration = 5400;
 static int numberOfRuns = 1;
 
-bool importLandscape;
-bool simulateFireWeather;
-bool centeredIgnitionPoint;
+// import landscape option - uses files in folder
+static bool importLandscape = false;
+static bool simulateFireWeather = false;
+static bool centeredIgnitionPoint = false;
 
 [[noreturn]] static void
 usage()
@@ -179,10 +180,10 @@ int main(int argc, char *argv[] )
     }
 
     //start simulation(s) and data log
-    for (int i = 0; i<fireSimulation.numberOfRuns; i++) {
+    for (int i = 0; i < fireSimulation.numberOfRuns; i++) {
         // create model landscape
         WFS_Landscape modelLandscape;
-        if(fireSimulation.importLandscape){
+        if (fireSimulation.importLandscape){
             modelLandscape.importLandscapeFromFile();
         } else {
             modelLandscape.generateLandscapeFromFile(fireSimulation.nameOfLandscapeParameterFile);
