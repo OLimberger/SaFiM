@@ -192,6 +192,8 @@ int main(int argc, char *argv[] )
     if (simulateFireWeather) {
         weatherSimulation.importMeteorologicalParameter(weatherFile);
         fireSimulation.whichMonth = fireSimulation.stringToMonth(month);
+    } else {
+       weatherSimulation.getFixedFireWeatherParameter(fixedWeatherFile, &weather);
     }
 
     //start simulation(s) and data log

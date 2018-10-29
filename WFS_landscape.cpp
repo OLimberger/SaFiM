@@ -152,7 +152,7 @@ WFS_Landscape::generateLandscapeFromFile(const std::string &fileName)
     // the csv should have one line per parameter
     if (parameters.size() != NumberOfLandscapeCreationParameters) {
 
-        std::cerr << "invalid configuration: there must be at least" << NumberOfLandscapeCreationParameters
+        std::cerr << "invalid configuration: there must be at least " << NumberOfLandscapeCreationParameters
                   << " lines in the CSV data\n";
         std::exit(1);
     }
